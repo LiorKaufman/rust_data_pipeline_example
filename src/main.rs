@@ -1,11 +1,10 @@
-use csv::Writer;
 use reqwest::Error;
 use serde::Deserialize;
 use serde::Serialize;
 use std::fs::File;
 use std::io;
 use std::io::Write;
-use url::{ParseError, Url};
+use url::Url;
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct WeatherResponse {
@@ -110,17 +109,10 @@ impl WeatherRequest {
 }
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    let req = WeatherRequest::new();
-
-    // Get the user input for lat, lon, and currentweather
-    // Handle all errors from the user input
-
+    let req = WeatherRequest::default();
     let url = req.get_url();
     let weather = req.call_the_weather_api(url.to_string()).await?;
     save_weather_response(&weather);
-    // Call the method to save the data as a JSON or CSV file
-    // Handle all errors from saving the file
-
     Ok(())
 }
 fn save_weather_response(weather_response: &WeatherResponse) {
