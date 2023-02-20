@@ -120,5 +120,5 @@ fn save_weather_response(weather_response: &WeatherResponse) {
     let file = File::create("weather_data.json");
     file.expect("no json file")
         .write_all(data.as_bytes())
-        .unwrap();
+        .ok();
 }
